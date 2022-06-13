@@ -4,15 +4,19 @@ import { Pair, Token, Bundle, PairCache } from '../generated/schema'
 import { ZERO_BD, ONE_BD, TWO_BD } from './helpers'
 
 const WAVAX_ADDRESS = '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7'
+
+// TODO deploy on bttc testnet
 const AEB_USDT_WAVAX_PAIR = '0x9ee0a4e21bd333a6bb2ab298194320b8daa26516' // created block 60,337
 const AEB_DAI_WAVAX_PAIR = '0x17a2e8275792b4616befb02eb9ae699aa0dcb94b' // created block 60,355
 const AB_DAI_WAVAX_PAIR = '0xba09679ab223c6bdaf44d45ba2d7279959289ab0' // created block 2,781,964
 const AB_USDT_WAVAX_PAIR = '0xe28984e1ee8d431346d32bec9ec800efb643eef4' // created block 2,781,997
 
 let AVERAGE_AVAX_PRICE_PRE_STABLES = BigDecimal.fromString('30')
-let AEB_USDT_WAVAX_PAIR_BLOCK = BigInt.fromI32(60337);
-let AEB_DAI_WAVAX_PAIR_BLOCK = BigInt.fromI32(60355);
-let AB_MIGRATION_CUTOVER_BLOCK = BigInt.fromI32(3117207) // August 20 2021 9:00am EST
+
+// Will be ignored in the below function
+let AEB_USDT_WAVAX_PAIR_BLOCK = BigInt.fromI32(1000000000);// doesnt exist yet
+let AEB_DAI_WAVAX_PAIR_BLOCK = BigInt.fromI32(100000000); // doesnt exist yet
+let AB_MIGRATION_CUTOVER_BLOCK = BigInt.fromI32(100000000); // doesnt exist yet
 
 export function getAVAXPriceInUSD(blockNumber: BigInt): BigDecimal {
 

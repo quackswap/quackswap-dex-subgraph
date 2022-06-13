@@ -3,16 +3,16 @@ import { Pair, Token, Bundle } from '../types/schema'
 import { BigDecimal, Address, BigInt } from '@graphprotocol/graph-ts/index'
 import { ZERO_BD, factoryContract, ADDRESS_ZERO, ONE_BD } from './helpers'
 
-const WAVAX_ADDRESS = '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7'
+const WAVAX_ADDRESS = '0x49C834914040E1EcD510FA60fBd82a538476Bd11'
 const AEB_USDT_WAVAX_PAIR = '0x9ee0a4e21bd333a6bb2ab298194320b8daa26516' // created block 60,337
 const AEB_DAI_WAVAX_PAIR = '0x17a2e8275792b4616befb02eb9ae699aa0dcb94b' // created block 60,355
 const AB_DAI_WAVAX_PAIR = '0xba09679ab223c6bdaf44d45ba2d7279959289ab0' // created block 2,781,964
 const AB_USDT_WAVAX_PAIR = '0xe28984e1ee8d431346d32bec9ec800efb643eef4' // created block 2,781,997
 
 let AVERAGE_AVAX_PRICE_PRE_STABLES = BigDecimal.fromString('30')
-let AEB_USDT_WAVAX_PAIR_BLOCK = BigInt.fromI32(60337);
-let AEB_DAI_WAVAX_PAIR_BLOCK = BigInt.fromI32(60355);
-let AB_MIGRATION_CUTOVER_BLOCK = BigInt.fromI32(3117207) // August 20 2021 9:00am EST
+let AEB_USDT_WAVAX_PAIR_BLOCK = BigInt.fromI32(1000000000);// doesnt exist yet
+let AEB_DAI_WAVAX_PAIR_BLOCK = BigInt.fromI32(100000000); // doesnt exist yet
+let AB_MIGRATION_CUTOVER_BLOCK = BigInt.fromI32(100000000); // doesnt exist yet
 
 export function getAVAXPriceInUSD(blockNumber: BigInt): BigDecimal {
 
@@ -55,18 +55,18 @@ export function getAVAXPriceInUSD(blockNumber: BigInt): BigDecimal {
 // token where amounts should contribute to tracked volume and liquidity
 let WHITELIST: string[] = [
   WAVAX_ADDRESS, // WAVAX
-  '0x60781c2586d68229fde47564546784ab3faca982', // PNG
-  '0xde3a24028580884448a5397872046a019649b084', // USDT
-  '0xc7198437980c041c805a1edcba50c1ce5db95118', // USDT.e
-  '0xba7deebbfc5fa1100fb055a87773e1e99cd3507a', // DAI
-  '0xd586e7f844cea2f87f50152665bcbc2c279d8d70', // DAI.e
-  '0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664', // USDC.e
-  '0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15', // ETH
-  '0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab', // WETH.e
-  '0x408d4cd0adb7cebd1f1a1c33a0ba2098e1295bab', // WBTC
-  '0x50b7545627a5162f82a992c33b87adc75187b218', // WBTC.e
-  '0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e', // USDC (native)
-  '0x260bbf5698121eb85e7a74f2e45e16ce762ebe11', // UST (axelar)
+  '0x2C78c425aBf000474f0677d49C013955845dd3C2', // PNG
+  // '0xde3a24028580884448a5397872046a019649b084', // USDT
+  // '0xc7198437980c041c805a1edcba50c1ce5db95118', // USDT.e
+  // '0xba7deebbfc5fa1100fb055a87773e1e99cd3507a', // DAI
+  // '0xd586e7f844cea2f87f50152665bcbc2c279d8d70', // DAI.e
+  // '0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664', // USDC.e
+  // '0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15', // ETH
+  // '0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab', // WETH.e
+  // '0x408d4cd0adb7cebd1f1a1c33a0ba2098e1295bab', // WBTC
+  // '0x50b7545627a5162f82a992c33b87adc75187b218', // WBTC.e
+  // '0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e', // USDC (native)
+  // '0x260bbf5698121eb85e7a74f2e45e16ce762ebe11', // UST (axelar)
 ]
 
 // minimum liquidity required to count towards tracked volume for pairs with small # of Lps

@@ -8,9 +8,9 @@ dataSources:
     name: Factory
     network: bttc
     source:
-      address: ""
+      address: "0x1840739f1DEb26656c36E0c4897AAA7eA93F7d58"
       abi: Factory
-      startBlock: 56877
+      startBlock: 8263603
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -35,9 +35,9 @@ dataSources:
     name: MiniChefV2
     network: bttc
     source:
-      address: ""
+      address: "0x9E9E04c59995071E9F31220Df7576474BDf2c364"
       abi: MiniChefV2
-      startBlock: 7281230
+      startBlock: 8263609
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
