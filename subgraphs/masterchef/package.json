@@ -11,7 +11,8 @@
     "build": "graph build",
     "auth": "graph auth https://api.thegraph.com/deploy/ $GRAPH_ACCESS_TOKEN",
     "deploy": "graph deploy pangolindex/minichefv2 --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ --debug --access-token $GRAPH_ACCESS_TOKEN",
-    "deploy-staging": "graph deploy sarjuhansaliya/minichefv2-dummy --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ --debug --access-token $GRAPH_ACCESS_TOKEN"
+    "create-staging": "graph create bttc-minichefv2 --node https://graph-json-rpc.hotcross.dev",
+    "deploy-staging": "graph deploy bttc-minichefv2 --ipfs https://ipfs.hotcross.dev/ --node https://graph-json-rpc.hotcross.dev"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "0.16.2",

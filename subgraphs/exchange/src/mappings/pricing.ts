@@ -3,50 +3,50 @@ import { Pair, Token, Bundle } from '../types/schema'
 import { BigDecimal, Address, BigInt } from '@graphprotocol/graph-ts/index'
 import { ZERO_BD, factoryContract, ADDRESS_ZERO, ONE_BD } from './helpers'
 
-const WAVAX_ADDRESS = '0x49C834914040E1EcD510FA60fBd82a538476Bd11'
-const AEB_USDT_WAVAX_PAIR = '0x9ee0a4e21bd333a6bb2ab298194320b8daa26516' // created block 60,337
-const AEB_DAI_WAVAX_PAIR = '0x17a2e8275792b4616befb02eb9ae699aa0dcb94b' // created block 60,355
-const AB_DAI_WAVAX_PAIR = '0xba09679ab223c6bdaf44d45ba2d7279959289ab0' // created block 2,781,964
-const AB_USDT_WAVAX_PAIR = '0xe28984e1ee8d431346d32bec9ec800efb643eef4' // created block 2,781,997
+const WBTT_ADDRESS = '0xD827bA08b294c17D4C42231f516c60E6eF9772A3'
+const AEB_USDT_WBTT_PAIR = '0x9ee0a4e21bd333a6bb2ab298194320b8daa26516' // created block 60,337
+const AEB_DAI_WBTT_PAIR = '0x17a2e8275792b4616befb02eb9ae699aa0dcb94b' // created block 60,355
+const AB_DAI_WBTT_PAIR = '0xba09679ab223c6bdaf44d45ba2d7279959289ab0' // created block 2,781,964
+const AB_USDT_WBTT_PAIR = '0xe28984e1ee8d431346d32bec9ec800efb643eef4' // created block 2,781,997
 
-let AVERAGE_AVAX_PRICE_PRE_STABLES = BigDecimal.fromString('30')
-let AEB_USDT_WAVAX_PAIR_BLOCK = BigInt.fromI32(1000000000);// doesnt exist yet
-let AEB_DAI_WAVAX_PAIR_BLOCK = BigInt.fromI32(100000000); // doesnt exist yet
+let AVERAGE_BTT_PRICE_PRE_STABLES = BigDecimal.fromString('30')
+let AEB_USDT_WBTT_PAIR_BLOCK = BigInt.fromI32(1000000000);// doesnt exist yet
+let AEB_DAI_WBTT_PAIR_BLOCK = BigInt.fromI32(100000000); // doesnt exist yet
 let AB_MIGRATION_CUTOVER_BLOCK = BigInt.fromI32(100000000); // doesnt exist yet
 
-export function getAVAXPriceInUSD(blockNumber: BigInt): BigDecimal {
+export function getBTTPriceInUSD(blockNumber: BigInt): BigDecimal {
 
-  if (blockNumber.gt(AB_MIGRATION_CUTOVER_BLOCK)) { // WAVAX-DAI.e & WAVAX-USDT.e exist
+  if (blockNumber.gt(AB_MIGRATION_CUTOVER_BLOCK)) { // WBTT-DAI.e & WBTT-USDT.e exist
 
-    let abDaiPair = Pair.load(AB_DAI_WAVAX_PAIR) // DAI.e is token1
-    let abUsdtPair = Pair.load(AB_USDT_WAVAX_PAIR) // USDT.e is token1
+    let abDaiPair = Pair.load(AB_DAI_WBTT_PAIR) // DAI.e is token1
+    let abUsdtPair = Pair.load(AB_USDT_WBTT_PAIR) // USDT.e is token1
 
-    let totalLiquidityWAVAX = abDaiPair.reserve0.plus(abUsdtPair.reserve0)
-    let abDaiWeight = abDaiPair.reserve0.div(totalLiquidityWAVAX)
-    let abUsdtWeight = abUsdtPair.reserve0.div(totalLiquidityWAVAX)
+    let totalLiquidityWBTT = abDaiPair.reserve0.plus(abUsdtPair.reserve0)
+    let abDaiWeight = abDaiPair.reserve0.div(totalLiquidityWBTT)
+    let abUsdtWeight = abUsdtPair.reserve0.div(totalLiquidityWBTT)
 
     return abDaiPair.token1Price.times(abDaiWeight).plus(abUsdtPair.token1Price.times(abUsdtWeight))
 
-  } else if (blockNumber.gt(AEB_DAI_WAVAX_PAIR_BLOCK)) { // WAVAX-USDT & WAVAX-DAI exist
+  } else if (blockNumber.gt(AEB_DAI_WBTT_PAIR_BLOCK)) { // WBTT-USDT & WBTT-DAI exist
 
-    let aebUsdtPair = Pair.load(AEB_USDT_WAVAX_PAIR) // USDT is token1
-    let aebDaiPair = Pair.load(AEB_DAI_WAVAX_PAIR) // DAI is token1
+    let aebUsdtPair = Pair.load(AEB_USDT_WBTT_PAIR) // USDT is token1
+    let aebDaiPair = Pair.load(AEB_DAI_WBTT_PAIR) // DAI is token1
 
-    let totalLiquidityWAVAX = aebUsdtPair.reserve0.plus(aebDaiPair.reserve0)
-    let aebUsdtWeight = aebUsdtPair.reserve0.div(totalLiquidityWAVAX)
-    let aebDaiWeight = aebDaiPair.reserve0.div(totalLiquidityWAVAX)
+    let totalLiquidityWBTT = aebUsdtPair.reserve0.plus(aebDaiPair.reserve0)
+    let aebUsdtWeight = aebUsdtPair.reserve0.div(totalLiquidityWBTT)
+    let aebDaiWeight = aebDaiPair.reserve0.div(totalLiquidityWBTT)
 
     return aebUsdtPair.token1Price.times(aebUsdtWeight).plus(aebDaiPair.token1Price.times(aebDaiWeight))
 
-  } else if (blockNumber.gt(AEB_USDT_WAVAX_PAIR_BLOCK)) { // WAVAX-USDT exists
+  } else if (blockNumber.gt(AEB_USDT_WBTT_PAIR_BLOCK)) { // WBTT-USDT exists
 
-    let aebUsdtPair = Pair.load(AEB_USDT_WAVAX_PAIR) // USDT is token1
+    let aebUsdtPair = Pair.load(AEB_USDT_WBTT_PAIR) // USDT is token1
 
     return aebUsdtPair.token1Price
 
   } else { /* No stable pairs exist */
 
-    return AVERAGE_AVAX_PRICE_PRE_STABLES
+    return AVERAGE_BTT_PRICE_PRE_STABLES
 
   }
 
@@ -54,8 +54,8 @@ export function getAVAXPriceInUSD(blockNumber: BigInt): BigDecimal {
 
 // token where amounts should contribute to tracked volume and liquidity
 let WHITELIST: string[] = [
-  WAVAX_ADDRESS, // WAVAX
-  '0x2C78c425aBf000474f0677d49C013955845dd3C2', // PNG
+  WBTT_ADDRESS, // WBTT
+  '0xC0e303034B59132E4F5230ac53F076C4D682431e', // QUACK
   // '0xde3a24028580884448a5397872046a019649b084', // USDT
   // '0xc7198437980c041c805a1edcba50c1ce5db95118', // USDT.e
   // '0xba7deebbfc5fa1100fb055a87773e1e99cd3507a', // DAI
@@ -80,7 +80,7 @@ let MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString('1')
  * @todo update to be derived ETH (add stablecoin estimates)
  **/
 export function findEthPerToken(token: Token): BigDecimal {
-  if (token.id == WAVAX_ADDRESS) {
+  if (token.id == WBTT_ADDRESS) {
     return ONE_BD
   }
   // loop through whitelist and check if paired with any
