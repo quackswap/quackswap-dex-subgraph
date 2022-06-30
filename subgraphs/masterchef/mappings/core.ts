@@ -4,7 +4,7 @@ import { Pair, Token, PangolinFactory, Bundle } from "../generated/schema";
 import { Sync, Transfer } from "../generated/templates/Pair/Pair";
 
 import {
-  getAVAXPriceInUSD,
+  getBTTPriceInUSD,
   findEthPerToken,
   getTrackedLiquidityUSD,
 } from "./pricing";
@@ -88,7 +88,7 @@ export function handleSync(event: Sync): void {
 
   // update ETH price now that reserves could have changed
   let bundle = Bundle.load("1");
-  bundle.ethPrice = getAVAXPriceInUSD(event.block.number);
+  bundle.ethPrice = getBTTPriceInUSD(event.block.number);
   bundle.save();
 
   token0.derivedETH = findEthPerToken(token0 as Token);

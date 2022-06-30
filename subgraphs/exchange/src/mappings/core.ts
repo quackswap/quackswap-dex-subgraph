@@ -12,7 +12,7 @@ import {
 } from '../types/schema'
 import { Mint, Burn, Swap, Transfer, Sync } from '../types/templates/Pair/Pair'
 import { updatePairDayData, updateTokenDayData, updatePangolinDayData, updatePairHourData } from './dayUpdates'
-import { getAVAXPriceInUSD, findEthPerToken, getTrackedVolumeUSD, getTrackedLiquidityUSD } from './pricing'
+import { getBTTPriceInUSD, findEthPerToken, getTrackedVolumeUSD, getTrackedLiquidityUSD } from './pricing'
 import {
   convertTokenToDecimal,
   ADDRESS_ZERO,
@@ -28,7 +28,7 @@ import {
 import { log } from '@graphprotocol/graph-ts'
 
 let MINING_POOLS: string[] = [
-  '0x9E9E04c59995071E9F31220Df7576474BDf2c364', // MiniChefV2
+  '0xA34293152058552ee268b58D905b5e9cDa39fA88', // MiniChefV2
 ]
 
 function isCompleteMint(mintId: string): boolean {
@@ -259,7 +259,7 @@ export function handleSync(event: Sync): void {
 
   // update ETH price now that reserves could have changed
   let bundle = Bundle.load('1')
-  bundle.ethPrice = getAVAXPriceInUSD(event.block.number)
+  bundle.ethPrice = getBTTPriceInUSD(event.block.number)
   bundle.save()
 
 

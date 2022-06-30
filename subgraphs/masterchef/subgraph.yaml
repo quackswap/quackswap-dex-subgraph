@@ -8,9 +8,9 @@ dataSources:
     name: Factory
     network: bttc
     source:
-      address: "0x1840739f1DEb26656c36E0c4897AAA7eA93F7d58"
+      address: "0xC66159A3D66fb8b515A86481785075018E52f76b"
       abi: Factory
-      startBlock: 8263603
+      startBlock: 7781186
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -35,9 +35,9 @@ dataSources:
     name: MiniChefV2
     network: bttc
     source:
-      address: "0x9E9E04c59995071E9F31220Df7576474BDf2c364"
+      address: "0xA34293152058552ee268b58D905b5e9cDa39fA88"
       abi: MiniChefV2
-      startBlock: 8263609
+      startBlock: 7781192
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -64,8 +64,6 @@ dataSources:
           handler: handlePoolSet
         - event: LogRewardPerSecond(uint256)
           handler: handleLogRewardPerSecond
-        - event: LogRewardsExpiration(uint256)
-          handler: handleLogRewardsExpiration
 templates:
   - kind: ethereum/contract
     name: Pair

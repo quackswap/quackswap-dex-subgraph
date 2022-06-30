@@ -17,9 +17,9 @@ import {
 } from "../generated/schema";
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
-export const FACTORY_ADDRESS = '0x1840739f1DEb26656c36E0c4897AAA7eA93F7d58'
-export const ROUTER_ADDRESS = '0xC66159A3D66fb8b515A86481785075018E52f76b'
-export const PNG_ADDRESS = "0x2C78c425aBf000474f0677d49C013955845dd3C2";
+export const FACTORY_ADDRESS = '0xC66159A3D66fb8b515A86481785075018E52f76b'
+export const ROUTER_ADDRESS = '0x9E9E04c59995071E9F31220Df7576474BDf2c364'
+export const QUACK_ADDRESS = "0xC0e303034B59132E4F5230ac53F076C4D682431e";
 
 export let ZERO_BI = BigInt.fromI32(0);
 export let ONE_BI = BigInt.fromI32(1);
@@ -307,9 +307,9 @@ export function createUpdateFarmRewards(
 
   // create default reward only if we creating farm rewards
   let defaultRewardKey =
-    rewarderAddress.toHexString() + "-" + PNG_ADDRESS + "-" + pid.toString();
+    rewarderAddress.toHexString() + "-" + QUACK_ADDRESS + "-" + pid.toString();
 
-  createFarmReward(defaultRewardKey, PNG_ADDRESS, ONE_BI, rewarderId);
+  createFarmReward(defaultRewardKey, QUACK_ADDRESS, ONE_BI, rewarderId);
 
   if (rewarderAddress.toHexString() != ADDRESS_ZERO) {
     let rewardTokens = fetchRewardTokens(rewarderAddress);
