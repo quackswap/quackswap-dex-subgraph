@@ -12,7 +12,7 @@ import {
   FarmingPosition,
   Pair,
   FarmReward,
-  Minichef,
+  Masterchef,
   FarmRewarder,
 } from "../generated/schema";
 
@@ -204,34 +204,34 @@ export function createUpdateRewarder(
   farmRewarder.save();
 }
 
-export function createUpdateMiniChef(
-  minichefKey: string,
+export function createUpdateMasterChef(
+  masterchefKey: string,
   rewardsExpiration: BigInt = ZERO_BI,
   totalAllocPoint: BigInt = ZERO_BI,
   rewardPerSecond: BigInt = ZERO_BI
 ): void {
-  let minichef = Minichef.load(minichefKey);
+  let masterchef = Masterchef.load(masterchefKey);
 
-  if (minichef !== null) {
+  if (masterchef !== null) {
     if (rewardsExpiration !== ZERO_BI) {
-      minichef.rewardsExpiration = rewardsExpiration;
+      masterchef.rewardsExpiration = rewardsExpiration;
     }
 
     if (totalAllocPoint !== ZERO_BI) {
-      minichef.totalAllocPoint = totalAllocPoint;
+      masterchef.totalAllocPoint = totalAllocPoint;
     }
 
     if (rewardPerSecond !== ZERO_BI) {
-      minichef.rewardPerSecond = rewardPerSecond;
+      masterchef.rewardPerSecond = rewardPerSecond;
     }
 
-    minichef.save();
+    masterchef.save();
   } else {
-    let minichef = new Minichef(minichefKey);
-    minichef.rewardsExpiration = rewardsExpiration;
-    minichef.totalAllocPoint = totalAllocPoint;
-    minichef.rewardPerSecond = rewardPerSecond;
-    minichef.save();
+    let masterchef = new Masterchef(masterchefKey);
+    masterchef.rewardsExpiration = rewardsExpiration;
+    masterchef.totalAllocPoint = totalAllocPoint;
+    masterchef.rewardPerSecond = rewardPerSecond;
+    masterchef.save();
   }
 }
 
@@ -257,16 +257,16 @@ export function createFarm(
   rewarderAddress: Address,
   allocPoint: BigInt
 ): void {
-  let minichefKey = chef.toHexString();
+  let masterchefKey = chef.toHexString();
 
-  let minichef = Minichef.load(minichefKey);
+  let masterchef = Masterchef.load(masterchefKey);
   let totalAllocPoint = ZERO_BI;
-  if (minichef !== null) {
-    totalAllocPoint = minichef.totalAllocPoint.plus(allocPoint);
+  if (masterchef !== null) {
+    totalAllocPoint = masterchef.totalAllocPoint.plus(allocPoint);
   } else {
     totalAllocPoint = totalAllocPoint.plus(allocPoint);
   }
-  createUpdateMiniChef(minichefKey, ZERO_BI, totalAllocPoint, ZERO_BI);
+  createUpdateMasterChef(masterchefKey, ZERO_BI, totalAllocPoint, ZERO_BI);
 
   let farmKey = chef.toHexString() + "-" + pid.toHexString();
   let rewarderId = rewarderAddress.toHexString() + "-" + pid.toHexString();
@@ -280,7 +280,7 @@ export function createFarm(
     farm.tvl = ZERO_BD;
     farm.allocPoint = allocPoint;
     farm.rewarder = rewarderId;
-    farm.minichef = minichefKey;
+    farm.masterchef = masterchefKey;
 
     let pairData = Pair.load(pair.toHexString());
 

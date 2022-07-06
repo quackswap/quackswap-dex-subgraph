@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 import { Address } from "@graphprotocol/graph-ts";
-import { Farm, Minichef } from "../generated/schema";
+import { Farm, Masterchef } from "../generated/schema";
 import {
   convertTokenToDecimal,
   createUser,
@@ -10,7 +10,7 @@ import {
   createUpdateFarmRewards,
   ZERO_BI,
   createUpdateRewarder,
-  createUpdateMiniChef,
+  createUpdateMasterChef,
 } from "./helpers";
 import {
   Deposit,
@@ -111,8 +111,8 @@ export function handlePoolSet(event: PoolSet): void {
   let overwrite = event.params.overwrite;
   let pid = event.params.pid;
   let rewarder = event.params.rewarder;
-  let minichefKey = event.address.toHexString();
-  let farmKey = minichefKey + "-" + pid.toHexString();
+  let masterchefKey = event.address.toHexString();
+  let farmKey = masterchefKey + "-" + pid.toHexString();
   let rewarderId = rewarder.toHexString() + "-" + pid.toHexString();
 
   let farm = Farm.load(farmKey);
@@ -124,17 +124,17 @@ export function handlePoolSet(event: PoolSet): void {
       farm.rewarder = rewarderId;
     }
 
-    let minichef = Minichef.load(minichefKey);
+    let masterchef = Masterchef.load(masterchefKey);
     let totalAllocPoint = ZERO_BI;
 
-    if (minichef !== null) {
-      totalAllocPoint = minichef.totalAllocPoint.plus(
+    if (masterchef !== null) {
+      totalAllocPoint = masterchef.totalAllocPoint.plus(
         allocPoint.minus(farm.allocPoint)
       );
     }
 
     farm.allocPoint = allocPoint;
-    createUpdateMiniChef(minichefKey, ZERO_BI, totalAllocPoint, ZERO_BI);
+    createUpdateMasterChef(masterchefKey, ZERO_BI, totalAllocPoint, ZERO_BI);
     farm.save();
   }
 
@@ -142,11 +142,10 @@ export function handlePoolSet(event: PoolSet): void {
 }
 
 export function handleLogRewardPerSecond(event: LogRewardPerSecond): void {
-  createUpdateMiniChef(
+  createUpdateMasterChef(
     event.address.toHexString(),
     ZERO_BI,
     ZERO_BI,
     event.params.rewardPerSecond
   );
 }
-
