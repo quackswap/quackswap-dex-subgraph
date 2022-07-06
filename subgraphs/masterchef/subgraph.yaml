@@ -8,9 +8,9 @@ dataSources:
     name: Factory
     network: bttc
     source:
-      address: "0xC66159A3D66fb8b515A86481785075018E52f76b"
+      address: "0xed69d8ae94576ed6455ede5bfaf319728cfca407"
       abi: Factory
-      startBlock: 7781186
+      startBlock: 8315964
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -32,23 +32,23 @@ dataSources:
         - event: PairCreated(indexed address,indexed address,address,uint256)
           handler: handleNewPair
   - kind: ethereum/contract
-    name: MiniChefV2
+    name: MasterChef
     network: bttc
     source:
-      address: "0xA34293152058552ee268b58D905b5e9cDa39fA88"
-      abi: MiniChefV2
-      startBlock: 7781192
+      address: "0x06a2505a99edb4dbac94a388b5a4ca7b48919fba"
+      abi: MasterChef
+      startBlock: 8315969
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
       language: wasm/assemblyscript
-      file: ./mappings/miniChefV2.ts
+      file: ./mappings/masterChef.ts
       entities:
         - Farm
         - Reward
       abis:
-        - name: MiniChefV2
-          file: ../../abis/MiniChefV2.json
+        - name: MasterChef
+          file: ../../abis/MasterChef.json
         - name: RewarderViaMultiplier
           file: ../../abis/RewarderViaMultiplier.json
       eventHandlers:

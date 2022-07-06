@@ -87,7 +87,7 @@ representative at an online or offline event.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at the
-[Pangolin community chat server](https://discord.com/invite/pangolindex).
+[QuackSwap community chat server](https://discord.com/invite/quackswapdex).
 
 All complaints will be reviewed and investigated promptly and fairly.
 

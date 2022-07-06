@@ -3,14 +3,15 @@ import { BigDecimal, BigInt } from '@graphprotocol/graph-ts'
 import { Pair, Token, Bundle, PairCache } from '../generated/schema'
 import { ZERO_BD, ONE_BD, TWO_BD } from './helpers'
 
-const WBTT_ADDRESS = '0x2C78c425aBf000474f0677d49C013955845dd3C2'
+const WBTT_ADDRESS = '0xd827ba08b294c17d4c42231f516c60e6ef9772a3'
 
 // TODO deploy on bttc testnet
 const AEB_USDT_WBTT_PAIR = '0x9ee0a4e21bd333a6bb2ab298194320b8daa26516' // created block 60,337
 const AEB_DAI_WBTT_PAIR = '0x17a2e8275792b4616befb02eb9ae699aa0dcb94b' // created block 60,355
 const AB_DAI_WBTT_PAIR = '0xba09679ab223c6bdaf44d45ba2d7279959289ab0' // created block 2,781,964
 const AB_USDT_WBTT_PAIR = '0xe28984e1ee8d431346d32bec9ec800efb643eef4' // created block 2,781,997
-const AB_USDC_WBTT_PAIR = '0x90946D411c391954cD78EeEFCceE58114ef838E9' // created block 8,372,985 
+
+const AB_USDC_WBTT_PAIR = '0x90946d411c391954cd78eeefccee58114ef838e9' // created block 8,372,985 
 
 let AVERAGE_BTT_PRICE_PRE_STABLES = BigDecimal.fromString('30')
 
@@ -63,13 +64,13 @@ export function getBTTPriceInUSD(blockNumber: BigInt): BigDecimal {
 // all addresses MUST be lowercase
 let WHITELIST: string[] = [
   WBTT_ADDRESS, // WBTT
-  '0xC0e303034B59132E4F5230ac53F076C4D682431e', // QUACK
+  '0xc0e303034b59132e4f5230ac53f076c4d682431e', // QUACK
   // '0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e', // USDC (native)
   // '0xb599c3590f42f8f995ecfa0f85d2980b76862fc1', // UST (wormhole)
   // '0x260bbf5698121eb85e7a74f2e45e16ce762ebe11', // UST (axelar)
 
   // AB Assets
-  '0xAE17940943BA9440540940DB0F1877f101D39e8b', // USDC.e
+  '0xae17940943ba9440540940db0f1877f101d39e8b', // USDC.e
   // '0xc7198437980c041c805a1edcba50c1ce5db95118', // USDT.e
   // '0xd586e7f844cea2f87f50152665bcbc2c279d8d70', // DAI.e
 

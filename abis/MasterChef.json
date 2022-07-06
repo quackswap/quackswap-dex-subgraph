@@ -81,32 +81,6 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "funder",
-        "type": "address"
-      }
-    ],
-    "name": "FunderAdded",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "funder",
-        "type": "address"
-      }
-    ],
-    "name": "FunderRemoved",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
         "indexed": true,
         "internalType": "address",
         "name": "user",
@@ -139,19 +113,6 @@
       }
     ],
     "name": "LogRewardPerSecond",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "rewardsExpiration",
-        "type": "uint256"
-      }
-    ],
-    "name": "LogRewardsExpiration",
     "type": "event"
   },
   {
@@ -334,25 +295,12 @@
     "name": "REWARD",
     "outputs": [
       {
-        "internalType": "contract IERC20",
+        "internalType": "contract IQuackSwapERC20",
         "name": "",
         "type": "address"
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_funder",
-        "type": "address"
-      }
-    ],
-    "name": "addFunder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -515,60 +463,6 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "extension",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "maxFunding",
-        "type": "uint256"
-      }
-    ],
-    "name": "extendRewardsViaDuration",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "funding",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "minExtension",
-        "type": "uint256"
-      }
-    ],
-    "name": "extendRewardsViaFunding",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "funding",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "duration",
-        "type": "uint256"
-      }
-    ],
-    "name": "fundRewards",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
         "name": "pid",
         "type": "uint256"
       },
@@ -581,25 +475,6 @@
     "name": "harvest",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_funder",
-        "type": "address"
-      }
-    ],
-    "name": "isFunder",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "allowed",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -781,7 +656,7 @@
             "type": "uint64"
           }
         ],
-        "internalType": "struct MiniChefV2.PoolInfo[]",
+        "internalType": "struct MasterChef.PoolInfo[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -803,34 +678,8 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_funder",
-        "type": "address"
-      }
-    ],
-    "name": "removeFunder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "renounceOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "duration",
-        "type": "uint256"
-      }
-    ],
-    "name": "resetRewardsDuration",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -862,19 +711,6 @@
         "internalType": "contract IRewarder",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "rewardsExpiration",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -950,6 +786,19 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_rewardPerSecond",
+        "type": "uint256"
+      }
+    ],
+    "name": "setRewardPerSecond",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "totalAllocPoint",
     "outputs": [
@@ -1003,7 +852,7 @@
             "type": "uint64"
           }
         ],
-        "internalType": "struct MiniChefV2.PoolInfo",
+        "internalType": "struct MasterChef.PoolInfo",
         "name": "pool",
         "type": "tuple"
       }

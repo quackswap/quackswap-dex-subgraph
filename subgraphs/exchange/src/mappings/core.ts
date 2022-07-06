@@ -3,7 +3,7 @@ import { BigInt, BigDecimal, store, Address } from '@graphprotocol/graph-ts'
 import {
   Pair,
   Token,
-  PangolinFactory,
+  QuackSwapFactory,
   Transaction,
   Mint as MintEvent,
   Burn as BurnEvent,
@@ -11,7 +11,7 @@ import {
   Bundle,
 } from '../types/schema'
 import { Mint, Burn, Swap, Transfer, Sync } from '../types/templates/Pair/Pair'
-import { updatePairDayData, updateTokenDayData, updatePangolinDayData, updatePairHourData } from './dayUpdates'
+import { updatePairDayData, updateTokenDayData, updateQuackSwapDayData, updatePairHourData } from './dayUpdates'
 import { getBTTPriceInUSD, findEthPerToken, getTrackedVolumeUSD, getTrackedLiquidityUSD } from './pricing'
 import {
   convertTokenToDecimal,
@@ -28,7 +28,7 @@ import {
 import { log } from '@graphprotocol/graph-ts'
 
 let MINING_POOLS: string[] = [
-  '0xA34293152058552ee268b58D905b5e9cDa39fA88', // MiniChefV2
+  '0x06a2505a99edb4dbac94a388b5a4ca7b48919fba', // MasterChef
 ]
 
 function isCompleteMint(mintId: string): boolean {
@@ -50,7 +50,7 @@ export function handleTransfer(event: Transfer): void {
     return
   }
 
-  //let factory = PangolinFactory.load(FACTORY_ADDRESS) // Is this needed?
+  //let factory = QuackSwapFactory.load(FACTORY_ADDRESS) // Is this needed?
 
   // user stats
   let from = event.params.from
@@ -236,11 +236,11 @@ export function handleSync(event: Sync): void {
   let pair = Pair.load(event.address.toHex())
   let token0 = Token.load(pair.token0)
   let token1 = Token.load(pair.token1)
-  let pangolin = PangolinFactory.load(FACTORY_ADDRESS)
+  let quackswap = QuackSwapFactory.load(FACTORY_ADDRESS)
 
   // reset factory liquidity by subtracting onluy tarcked liquidity
 
-  pangolin.totalLiquidityETH = pangolin.totalLiquidityETH.minus(pair.trackedReserveETH as BigDecimal)
+  quackswap.totalLiquidityETH = quackswap.totalLiquidityETH.minus(pair.trackedReserveETH as BigDecimal)
 
 
   // reset token total liquidity amounts
@@ -287,8 +287,8 @@ export function handleSync(event: Sync): void {
   pair.reserveUSD = pair.reserveETH.times(bundle.ethPrice)
 
   // use tracked amounts globally
-  pangolin.totalLiquidityETH = pangolin.totalLiquidityETH.plus(trackedLiquidityETH)
-  pangolin.totalLiquidityUSD = pangolin.totalLiquidityETH.times(bundle.ethPrice)
+  quackswap.totalLiquidityETH = quackswap.totalLiquidityETH.plus(trackedLiquidityETH)
+  quackswap.totalLiquidityUSD = quackswap.totalLiquidityETH.times(bundle.ethPrice)
 
   // now correctly set liquidity amounts for each token
   token0.totalLiquidity = token0.totalLiquidity.plus(pair.reserve0)
@@ -296,7 +296,7 @@ export function handleSync(event: Sync): void {
 
   // save entities
   pair.save()
-  pangolin.save()
+  quackswap.save()
   token0.save()
   token1.save()
 }
@@ -307,7 +307,7 @@ export function handleMint(event: Mint): void {
   let mint = MintEvent.load(mints[mints.length - 1])
 
   let pair = Pair.load(event.address.toHex())
-  let pangolin = PangolinFactory.load(FACTORY_ADDRESS)
+  let quackswap = QuackSwapFactory.load(FACTORY_ADDRESS)
 
   let token0 = Token.load(pair.token0)
   let token1 = Token.load(pair.token1)
@@ -329,13 +329,13 @@ export function handleMint(event: Mint): void {
 
   // update txn counts
   pair.txCount = pair.txCount.plus(ONE_BI)
-  pangolin.txCount = pangolin.txCount.plus(ONE_BI)
+  quackswap.txCount = quackswap.txCount.plus(ONE_BI)
 
   // save entities
   token0.save()
   token1.save()
   pair.save()
-  pangolin.save()
+  quackswap.save()
 
   mint.sender = event.params.sender
   mint.amount0 = token0Amount as BigDecimal
@@ -351,7 +351,7 @@ export function handleMint(event: Mint): void {
   // update day entities
   updatePairDayData(event)
   updatePairHourData(event)
-  updatePangolinDayData(event)
+  updateQuackSwapDayData(event)
   updateTokenDayData(token0 as Token, event)
   updateTokenDayData(token1 as Token, event)
 }
@@ -368,7 +368,7 @@ export function handleBurn(event: Burn): void {
   let burn = BurnEvent.load(burns[burns.length - 1])
 
   let pair = Pair.load(event.address.toHex())
-  let pangolin = PangolinFactory.load(FACTORY_ADDRESS)
+  let quackswap = QuackSwapFactory.load(FACTORY_ADDRESS)
 
   //update token info
   let token0 = Token.load(pair.token0)
@@ -388,14 +388,14 @@ export function handleBurn(event: Burn): void {
     .times(bundle.ethPrice)
 
   // update txn counts
-  pangolin.txCount = pangolin.txCount.plus(ONE_BI)
+  quackswap.txCount = quackswap.txCount.plus(ONE_BI)
   pair.txCount = pair.txCount.plus(ONE_BI)
 
   // update global counter and save
   token0.save()
   token1.save()
   pair.save()
-  pangolin.save()
+  quackswap.save()
 
   // update burn
   // burn.sender = event.params.sender
@@ -413,7 +413,7 @@ export function handleBurn(event: Burn): void {
   // update day entities
   updatePairDayData(event)
   updatePairHourData(event)
-  updatePangolinDayData(event)
+  updateQuackSwapDayData(event)
   updateTokenDayData(token0 as Token, event)
   updateTokenDayData(token1 as Token, event)
 }
@@ -483,17 +483,17 @@ export function handleSwap(event: Swap): void {
   pair.save()
 
   // update global values, only used tracked amounts for volume
-  let pangolin = PangolinFactory.load(FACTORY_ADDRESS)
-  pangolin.totalVolumeUSD = pangolin.totalVolumeUSD.plus(trackedAmountUSD)
-  pangolin.totalVolumeETH = pangolin.totalVolumeETH.plus(trackedAmountETH)
-  pangolin.untrackedVolumeUSD = pangolin.untrackedVolumeUSD.plus(derivedAmountUSD)
-  pangolin.txCount = pangolin.txCount.plus(ONE_BI)
+  let quackswap = QuackSwapFactory.load(FACTORY_ADDRESS)
+  quackswap.totalVolumeUSD = quackswap.totalVolumeUSD.plus(trackedAmountUSD)
+  quackswap.totalVolumeETH = quackswap.totalVolumeETH.plus(trackedAmountETH)
+  quackswap.untrackedVolumeUSD = quackswap.untrackedVolumeUSD.plus(derivedAmountUSD)
+  quackswap.txCount = quackswap.txCount.plus(ONE_BI)
 
   // save entities
   pair.save()
   token0.save()
   token1.save()
-  pangolin.save()
+  quackswap.save()
 
   let transaction = Transaction.load(event.transaction.hash.toHexString())
   if (transaction === null) {
@@ -540,15 +540,15 @@ export function handleSwap(event: Swap): void {
   // update day entities
   let pairDayData = updatePairDayData(event)
   let pairHourData = updatePairHourData(event)
-  let pangolinDayData = updatePangolinDayData(event)
+  let quackswapDayData = updateQuackSwapDayData(event)
   let token0DayData = updateTokenDayData(token0 as Token, event)
   let token1DayData = updateTokenDayData(token1 as Token, event)
 
   // swap specific updating
-  pangolinDayData.dailyVolumeUSD = pangolinDayData.dailyVolumeUSD.plus(trackedAmountUSD)
-  pangolinDayData.dailyVolumeETH = pangolinDayData.dailyVolumeETH.plus(trackedAmountETH)
-  pangolinDayData.dailyVolumeUntracked = pangolinDayData.dailyVolumeUntracked.plus(derivedAmountUSD)
-  pangolinDayData.save()
+  quackswapDayData.dailyVolumeUSD = quackswapDayData.dailyVolumeUSD.plus(trackedAmountUSD)
+  quackswapDayData.dailyVolumeETH = quackswapDayData.dailyVolumeETH.plus(trackedAmountETH)
+  quackswapDayData.dailyVolumeUntracked = quackswapDayData.dailyVolumeUntracked.plus(derivedAmountUSD)
+  quackswapDayData.save()
 
   // swap specific updating for pair
   pairDayData.dailyVolumeToken0 = pairDayData.dailyVolumeToken0.plus(amount0Total)

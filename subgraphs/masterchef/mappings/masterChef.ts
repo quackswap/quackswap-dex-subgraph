@@ -18,9 +18,8 @@ import {
   Withdraw,
   EmergencyWithdraw,
   PoolSet,
-  LogRewardPerSecond,
-  LogRewardsExpiration,
-} from "../generated/MiniChefV2/MiniChefV2";
+  LogRewardPerSecond
+} from "../generated/MasterChef/MasterChef";
 
 export function handlePoolAdded(event: PoolAdded): void {
   createFarm(
@@ -151,11 +150,3 @@ export function handleLogRewardPerSecond(event: LogRewardPerSecond): void {
   );
 }
 
-export function handleLogRewardsExpiration(event: LogRewardsExpiration): void {
-  createUpdateMiniChef(
-    event.address.toHexString(),
-    event.params.rewardsExpiration,
-    ZERO_BI,
-    ZERO_BI
-  );
-}

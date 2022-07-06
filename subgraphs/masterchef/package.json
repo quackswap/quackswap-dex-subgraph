@@ -1,7 +1,7 @@
 {
   "name": "minichefv2",
   "version": "0.0.1",
-  "repository": "https://github.com/pangolindex/subgraph",
+  "repository": "https://github.com/quackswapdex/subgraph",
   "license": "GPL-3.0-or-later",
   "scripts": {
     "codegen": "graph codegen",
@@ -10,9 +10,9 @@
     "deploy-local": "graph deploy sarjuhansaliya/minichef-dummy --debug --ipfs http://localhost:5001 --node http://127.0.0.1:8020 --access-token $GRAPH_ACCESS_TOKEN",
     "build": "graph build",
     "auth": "graph auth https://api.thegraph.com/deploy/ $GRAPH_ACCESS_TOKEN",
-    "deploy": "graph deploy pangolindex/minichefv2 --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ --debug --access-token $GRAPH_ACCESS_TOKEN",
-    "create-staging": "graph create bttc-minichefv2 --node https://graph-json-rpc.hotcross.dev",
-    "deploy-staging": "graph deploy bttc-minichefv2 --ipfs https://ipfs.hotcross.dev/ --node https://graph-json-rpc.hotcross.dev"
+    "deploy": "graph deploy quackswapdex/masterchef --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ --debug --access-token $GRAPH_ACCESS_TOKEN",
+    "create-staging": "graph create bttc-masterchef --node https://graph-json-rpc.hotcross.dev",
+    "deploy-staging": "graph deploy bttc-masterchef --ipfs https://ipfs.hotcross.dev/ --node https://graph-json-rpc.hotcross.dev"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "0.16.2",

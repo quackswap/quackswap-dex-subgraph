@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 import { log, Address } from "@graphprotocol/graph-ts";
 import {
-  PangolinFactory,
+  QuackSwapFactory,
   Pair,
   PairCache,
   Token,
@@ -22,9 +22,9 @@ import {
 export function handleNewPair(event: PairCreated): void {
   // load factory (create if first exchange)
 
-  let factory = PangolinFactory.load(FACTORY_ADDRESS);
+  let factory = QuackSwapFactory.load(FACTORY_ADDRESS);
   if (factory === null) {
-    factory = new PangolinFactory(FACTORY_ADDRESS);
+    factory = new QuackSwapFactory(FACTORY_ADDRESS);
     factory.pairCount = 0;
     factory.totalVolumeETH = ZERO_BD;
     factory.totalLiquidityETH = ZERO_BD;

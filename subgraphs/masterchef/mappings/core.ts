@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 import { BigDecimal, BigInt, log } from "@graphprotocol/graph-ts";
-import { Pair, Token, PangolinFactory, Bundle } from "../generated/schema";
+import { Pair, Token, QuackSwapFactory, Bundle } from "../generated/schema";
 import { Sync, Transfer } from "../generated/templates/Pair/Pair";
 
 import {
@@ -17,7 +17,7 @@ import {
 } from "./helpers";
 
 let MINING_POOLS: string[] = [
-  "0x9E9E04c59995071E9F31220Df7576474BDf2c364", // MiniChefV2
+  "0x06a2505a99edb4dbac94a388b5a4ca7b48919fba", // MasterChef
 ];
 
 export function handleTransfer(event: Transfer): void {
@@ -63,10 +63,10 @@ export function handleSync(event: Sync): void {
   let pair = Pair.load(event.address.toHex());
   let token0 = Token.load(pair.token0);
   let token1 = Token.load(pair.token1);
-  let pangolin = PangolinFactory.load(FACTORY_ADDRESS);
+  let quackswap = QuackSwapFactory.load(FACTORY_ADDRESS);
 
   // reset factory liquidity by subtracting only tracked liquidity
-  pangolin.totalLiquidityETH = pangolin.totalLiquidityETH.minus(
+  quackswap.totalLiquidityETH = quackswap.totalLiquidityETH.minus(
     pair.trackedReserveETH
   );
 
@@ -117,10 +117,10 @@ export function handleSync(event: Sync): void {
   pair.reserveUSD = pair.reserveETH.times(bundle.ethPrice);
 
   // use tracked amounts globally
-  pangolin.totalLiquidityETH = pangolin.totalLiquidityETH.plus(
+  quackswap.totalLiquidityETH = quackswap.totalLiquidityETH.plus(
     pair.trackedReserveETH
   );
-  pangolin.totalLiquidityUSD = pangolin.totalLiquidityETH.times(
+  quackswap.totalLiquidityUSD = quackswap.totalLiquidityETH.times(
     bundle.ethPrice
   );
 
@@ -130,7 +130,7 @@ export function handleSync(event: Sync): void {
 
   // save entities
   pair.save();
-  pangolin.save();
+  quackswap.save();
   token0.save();
   token1.save();
 }

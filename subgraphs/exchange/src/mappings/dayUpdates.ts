@@ -1,31 +1,31 @@
 import { PairHourData } from './../types/schema'
 /* eslint-disable prefer-const */
 import { BigInt, BigDecimal, EthereumEvent } from '@graphprotocol/graph-ts'
-import { Pair, Bundle, Token, PangolinFactory, PangolinDayData, PairDayData, TokenDayData } from '../types/schema'
+import { Pair, Bundle, Token, QuackSwapFactory, QuackSwapDayData, PairDayData, TokenDayData } from '../types/schema'
 import { ONE_BI, ZERO_BD, ZERO_BI, FACTORY_ADDRESS } from './helpers'
 
-export function updatePangolinDayData(event: EthereumEvent): PangolinDayData {
-  let pangolin = PangolinFactory.load(FACTORY_ADDRESS)
+export function updateQuackSwapDayData(event: EthereumEvent): QuackSwapDayData {
+  let quackswap = QuackSwapFactory.load(FACTORY_ADDRESS)
   let timestamp = event.block.timestamp.toI32()
   let dayID = timestamp / 86400
   let dayStartTimestamp = dayID * 86400
-  let pangolinDayData = PangolinDayData.load(dayID.toString())
-  if (pangolinDayData === null) {
-    pangolinDayData = new PangolinDayData(dayID.toString())
-    pangolinDayData.date = dayStartTimestamp
-    pangolinDayData.dailyVolumeUSD = ZERO_BD
-    pangolinDayData.dailyVolumeETH = ZERO_BD
-    pangolinDayData.totalVolumeUSD = ZERO_BD
-    pangolinDayData.totalVolumeETH = ZERO_BD
-    pangolinDayData.dailyVolumeUntracked = ZERO_BD
+  let quackswapDayData = QuackSwapDayData.load(dayID.toString())
+  if (quackswapDayData === null) {
+    quackswapDayData = new QuackSwapDayData(dayID.toString())
+    quackswapDayData.date = dayStartTimestamp
+    quackswapDayData.dailyVolumeUSD = ZERO_BD
+    quackswapDayData.dailyVolumeETH = ZERO_BD
+    quackswapDayData.totalVolumeUSD = ZERO_BD
+    quackswapDayData.totalVolumeETH = ZERO_BD
+    quackswapDayData.dailyVolumeUntracked = ZERO_BD
   }
 
-  pangolinDayData.totalLiquidityUSD = pangolin.totalLiquidityUSD
-  pangolinDayData.totalLiquidityETH = pangolin.totalLiquidityETH
-  pangolinDayData.txCount = pangolin.txCount
-  pangolinDayData.save()
+  quackswapDayData.totalLiquidityUSD = quackswap.totalLiquidityUSD
+  quackswapDayData.totalLiquidityETH = quackswap.totalLiquidityETH
+  quackswapDayData.txCount = quackswap.txCount
+  quackswapDayData.save()
 
-  return pangolinDayData as PangolinDayData
+  return quackswapDayData as QuackSwapDayData
 }
 
 export function updatePairDayData(event: EthereumEvent): PairDayData {

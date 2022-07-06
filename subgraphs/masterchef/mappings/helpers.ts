@@ -3,7 +3,7 @@ import { BigInt, BigDecimal, Address, log } from "@graphprotocol/graph-ts";
 import { ERC20 } from "../generated/Factory/ERC20";
 import { ERC20SymbolBytes } from "../generated/Factory/ERC20SymbolBytes";
 import { ERC20NameBytes } from "../generated/Factory/ERC20NameBytes";
-import { RewarderViaMultiplier } from "../generated/MiniChefV2/RewarderViaMultiplier";
+import { RewarderViaMultiplier } from "../generated/MasterChef/RewarderViaMultiplier";
 import {
   User,
   Bundle,
@@ -17,9 +17,9 @@ import {
 } from "../generated/schema";
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
-export const FACTORY_ADDRESS = '0xC66159A3D66fb8b515A86481785075018E52f76b'
-export const ROUTER_ADDRESS = '0x9E9E04c59995071E9F31220Df7576474BDf2c364'
-export const QUACK_ADDRESS = "0xC0e303034B59132E4F5230ac53F076C4D682431e";
+export const FACTORY_ADDRESS = '0xEd69D8ae94576Ed6455EDE5bfAF319728CFCA407'
+export const ROUTER_ADDRESS = '0x672b4326acda2d186f117a102e779e54d5a536ce'
+export const QUACK_ADDRESS = "0xc0e303034b59132e4f5230ac53f076c4d682431e";
 
 export let ZERO_BI = BigInt.fromI32(0);
 export let ONE_BI = BigInt.fromI32(1);
