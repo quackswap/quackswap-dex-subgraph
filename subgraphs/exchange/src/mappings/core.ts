@@ -28,7 +28,7 @@ import {
 import { log } from '@graphprotocol/graph-ts'
 
 let MINING_POOLS: string[] = [
-  '0x06a2505a99edb4dbac94a388b5a4ca7b48919fba', // MasterChef
+  '0x373cda93c951948f2e64d444cd20f75d469b2f84', // MasterChef
 ]
 
 function isCompleteMint(mintId: string): boolean {

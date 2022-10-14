@@ -8,8 +8,8 @@
     "build": "graph build",
     "create-staging": "graph create bttc-dex --node https://graph-json-rpc.hotcross.dev",
     "deploy-staging": "graph deploy bttc-dex --ipfs https://ipfs.hotcross.dev --node https://graph-json-rpc.hotcross.dev",
-    "create-prod": "graph create bttc-dex --node https://graph-json-rpc.hotcross.com",
-    "deploy-prod": "graph deploy bttc-dex --ipfs https://ipfs.hotcross.com --node https://graph-json-rpc.hotcross.com"
+    "create-prod": "graph create bttc-dex --node https://graph-json-rpc.quackswap.xyz",
+    "deploy-prod": "graph deploy bttc-dex --ipfs https://ipfs.quackswap.xyz --node https://graph-json-rpc.quackswap.xyz"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "0.16.2",

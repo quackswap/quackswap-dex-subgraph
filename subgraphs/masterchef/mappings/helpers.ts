@@ -17,9 +17,9 @@ import {
 } from "../generated/schema";
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
-export const FACTORY_ADDRESS = '0xEd69D8ae94576Ed6455EDE5bfAF319728CFCA407'
-export const ROUTER_ADDRESS = '0x672b4326acda2d186f117a102e779e54d5a536ce'
-export const QUACK_ADDRESS = "0xc0e303034b59132e4f5230ac53f076c4d682431e";
+export const FACTORY_ADDRESS = '0x3f52dbf5ef57756c3573f53cd825d6991860335f'
+export const ROUTER_ADDRESS = '0x13943d58035eb4a782aa06d5647629479d788dbd'
+export const QUACK_ADDRESS = "0xf682fbac14efaacb59b20898809b304e86cd3b7d";
 
 export let ZERO_BI = BigInt.fromI32(0);
 export let ONE_BI = BigInt.fromI32(1);

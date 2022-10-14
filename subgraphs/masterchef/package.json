@@ -11,8 +11,10 @@
     "build": "graph build",
     "auth": "graph auth https://api.thegraph.com/deploy/ $GRAPH_ACCESS_TOKEN",
     "deploy": "graph deploy quackswapdex/masterchef --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ --debug --access-token $GRAPH_ACCESS_TOKEN",
-    "create-staging": "graph create bttc-masterchef --node https://graph-json-rpc.hotcross.dev",
-    "deploy-staging": "graph deploy bttc-masterchef --ipfs https://ipfs.hotcross.dev/ --node https://graph-json-rpc.hotcross.dev"
+    "create-staging": "graph create bttc-masterchef --node https://graph-json-rpc.quackswap.dev",
+    "deploy-staging": "graph deploy bttc-masterchef --ipfs https://ipfs.quackswap.dev/ --node https://graph-json-rpc.quackswap.dev",
+    "create-prod": "graph create bttc-masterchef --node https://graph-json-rpc.quackswap.xyz",
+    "deploy-prod": "graph deploy bttc-masterchef --ipfs https://ipfs.quackswap.xyz/ --node https://graph-json-rpc.quackswap.xyz"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "0.16.2",
